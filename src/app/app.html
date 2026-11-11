@@ -1,0 +1,19 @@
+<div class="vjs-nv-main">
+    <div class="vjs-nv-taskbar">
+        <div class="vjs-nv-taskbar-links">
+            @for (kind of kinds; track kind) {
+                <button [class.active]="!hidden()[kind]" [attr.aria-pressed]="!hidden()[kind]"
+                        (click)="toggle(kind)">{{ kind }}</button>
+            }
+        </div>
+        <div class="vjs-nv-taskbar-actions">
+            <button (click)="setAll(false)">Show All</button>
+            <button (click)="setAll(true)">Hide All</button>
+        </div>
+    </div>
+    <vjs-surface [data]="initialData" [renderOptions]="renderOptions" [viewOptions]="viewOptions" />
+    @for (panel of panels(); track panel.kind) {
+        <app-neighbourhood-popup [kind]="panel.kind" [focusId]="focusNodeId()" [data]="panel.data"
+            [hidden]="hidden()[panel.kind]" (toggle)="toggle(panel.kind)" (nodeTap)="focusNode($event)" />
+    }
+</div>
